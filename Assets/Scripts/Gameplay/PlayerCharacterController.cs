@@ -56,15 +56,6 @@ namespace Unity.FPS.Gameplay
         [Header("Stance")] [Tooltip("Ratio (0-1) of the character height where the camera will be at")]
         public float CameraHeightRatio = 0.9f;
 
-        [Tooltip("Height of character when standing")]
-        public float CapsuleHeightStanding = 1.8f;
-
-        [Tooltip("Height of character when crouching")]
-        public float CapsuleHeightCrouching = 0.9f;
-
-        [Tooltip("Speed of crouching transitions")]
-        public float CrouchingSharpness = 10f;
-
         [Header("Audio")] [Tooltip("Amount of footstep sounds played when moving one meter")]
         public float FootstepSfxFrequency = 1f;
 
@@ -164,10 +155,13 @@ namespace Unity.FPS.Gameplay
             m_Controller.enableOverlapRecovery = true;
 
             m_Health.OnDie += OnDie;
-
-            // force the crouch state to false when starting
-            SetCrouchingState(false, true);
-            UpdateCharacterHeight(true);
+            
+            // Correct the centre of the capsule
+            m_Controller.center = Vector3.up * m_Controller.height * 0.5f;
+            
+            // Correct the position of the camera and aiming point
+            PlayerCamera.transform.localPosition = Vector3.up * m_Controller.height * CameraHeightRatio;
+            m_Actor.AimPoint.transform.localPosition = m_Controller.center;
         }
 
         void Update()
@@ -204,14 +198,6 @@ namespace Unity.FPS.Gameplay
                     AudioSource.PlayOneShot(LandSfx);
                 }
             }
-
-            // crouching
-            if (m_InputHandler.GetCrouchInputDown())
-            {
-                SetCrouchingState(!IsCrouching, false);
-            }
-
-            UpdateCharacterHeight(false);
 
             HandleCharacterMovement();
         }
@@ -289,11 +275,6 @@ namespace Unity.FPS.Gameplay
             // character movement handling
             bool isSprinting = m_InputHandler.GetSprintInputHeld();
             {
-                if (isSprinting)
-                {
-                    isSprinting = SetCrouchingState(false, false);
-                }
-
                 float speedModifier = isSprinting ? SprintSpeedModifier : 1f;
 
                 // converts move input to a worldspace vector based on our character's transform orientation
@@ -317,26 +298,22 @@ namespace Unity.FPS.Gameplay
                     // jumping
                     if (IsGrounded && m_InputHandler.GetJumpInputDown())
                     {
-                        // force the crouch state to false
-                        if (SetCrouchingState(false, false))
-                        {
-                            // start by canceling out the vertical component of our velocity
-                            CharacterVelocity = new Vector3(CharacterVelocity.x, 0f, CharacterVelocity.z);
+                        // start by canceling out the vertical component of our velocity
+                        CharacterVelocity = new Vector3(CharacterVelocity.x, 0f, CharacterVelocity.z);
 
-                            // then, add the jumpSpeed value upwards
-                            CharacterVelocity += Vector3.up * JumpForce;
+                        // then, add the jumpSpeed value upwards
+                        CharacterVelocity += Vector3.up * JumpForce;
 
-                            // play sound
-                            AudioSource.PlayOneShot(JumpSfx);
+                        // play sound
+                        AudioSource.PlayOneShot(JumpSfx);
 
-                            // remember last time we jumped because we need to prevent snapping to ground for a short time
-                            m_LastTimeJumped = Time.time;
-                            HasJumpedThisFrame = true;
+                        // remember last time we jumped because we need to prevent snapping to ground for a short time
+                        m_LastTimeJumped = Time.time;
+                        HasJumpedThisFrame = true;
 
-                            // Force grounding to false
-                            IsGrounded = false;
-                            m_GroundNormal = Vector3.up;
-                        }
+                        // Force grounding to false
+                        IsGrounded = false;
+                        m_GroundNormal = Vector3.up;
                     }
 
                     // footsteps sound
@@ -409,69 +386,6 @@ namespace Unity.FPS.Gameplay
         {
             Vector3 directionRight = Vector3.Cross(direction, transform.up);
             return Vector3.Cross(slopeNormal, directionRight).normalized;
-        }
-
-        void UpdateCharacterHeight(bool force)
-        {
-            // Update height instantly
-            if (force)
-            {
-                m_Controller.height = m_TargetCharacterHeight;
-                m_Controller.center = Vector3.up * m_Controller.height * 0.5f;
-                PlayerCamera.transform.localPosition = Vector3.up * m_TargetCharacterHeight * CameraHeightRatio;
-                m_Actor.AimPoint.transform.localPosition = m_Controller.center;
-            }
-            // Update smooth height
-            else if (m_Controller.height != m_TargetCharacterHeight)
-            {
-                // resize the capsule and adjust camera position
-                m_Controller.height = Mathf.Lerp(m_Controller.height, m_TargetCharacterHeight,
-                    CrouchingSharpness * Time.deltaTime);
-                m_Controller.center = Vector3.up * m_Controller.height * 0.5f;
-                PlayerCamera.transform.localPosition = Vector3.Lerp(PlayerCamera.transform.localPosition,
-                    Vector3.up * m_TargetCharacterHeight * CameraHeightRatio, CrouchingSharpness * Time.deltaTime);
-                m_Actor.AimPoint.transform.localPosition = m_Controller.center;
-            }
-        }
-
-        // returns false if there was an obstruction
-        bool SetCrouchingState(bool crouched, bool ignoreObstructions)
-        {
-            // set appropriate heights
-            if (crouched)
-            {
-                m_TargetCharacterHeight = CapsuleHeightCrouching;
-            }
-            else
-            {
-                // Detect obstructions
-                if (!ignoreObstructions)
-                {
-                    Collider[] standingOverlaps = Physics.OverlapCapsule(
-                        GetCapsuleBottomHemisphere(),
-                        GetCapsuleTopHemisphere(CapsuleHeightStanding),
-                        m_Controller.radius,
-                        -1,
-                        QueryTriggerInteraction.Ignore);
-                    foreach (Collider c in standingOverlaps)
-                    {
-                        if (c != m_Controller)
-                        {
-                            return false;
-                        }
-                    }
-                }
-
-                m_TargetCharacterHeight = CapsuleHeightStanding;
-            }
-
-            if (OnStanceChanged != null)
-            {
-                OnStanceChanged.Invoke(crouched);
-            }
-
-            IsCrouching = crouched;
-            return true;
         }
     }
 }
