@@ -59,9 +59,6 @@ namespace Unity.FPS.Gameplay
         [Header("Audio")] [Tooltip("Amount of footstep sounds played when moving one meter")]
         public float FootstepSfxFrequency = 1f;
 
-        [Tooltip("Amount of footstep sounds played when moving one meter while sprinting")]
-        public float FootstepSfxFrequencyWhileSprinting = 1f;
-
         [Tooltip("Sound played for footsteps")]
         public AudioClip FootstepSfx;
 
@@ -252,97 +249,86 @@ namespace Unity.FPS.Gameplay
 
         void HandleCharacterMovement()
         {
-            // horizontal character rotation
-            {
-                // rotate the transform with the input speed around its local Y axis
-                transform.Rotate(
-                    new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed * RotationMultiplier),
-                        0f), Space.Self);
-            }
+            // rotate the transform with the input speed around its local Y axis
+            transform.Rotate(
+                new Vector3(0f, (m_InputHandler.GetLookInputsHorizontal() * RotationSpeed * RotationMultiplier),
+                    0f), Space.Self);
+            
+            // add vertical inputs to the camera's vertical angle
+            m_CameraVerticalAngle += m_InputHandler.GetLookInputsVertical() * RotationSpeed * RotationMultiplier;
 
-            // vertical camera rotation
-            {
-                // add vertical inputs to the camera's vertical angle
-                m_CameraVerticalAngle += m_InputHandler.GetLookInputsVertical() * RotationSpeed * RotationMultiplier;
+            // limit the camera's vertical angle to min/max
+            m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -89f, 89f);
 
-                // limit the camera's vertical angle to min/max
-                m_CameraVerticalAngle = Mathf.Clamp(m_CameraVerticalAngle, -89f, 89f);
-
-                // apply the vertical angle as a local rotation to the camera transform along its right axis (makes it pivot up and down)
-                PlayerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
-            }
+            // apply the vertical angle as a local rotation to the camera transform along its right axis (makes it pivot up and down)
+            PlayerCamera.transform.localEulerAngles = new Vector3(m_CameraVerticalAngle, 0, 0);
 
             // character movement handling
-            bool isSprinting = m_InputHandler.GetSprintInputHeld();
+            float speedModifier = 1f;
+
+            // converts move input to a worldspace vector based on our character's transform orientation
+            Vector3 worldspaceMoveInput = transform.TransformVector(m_InputHandler.GetMoveInput());
+
+            // handle grounded movement
+            if (IsGrounded)
             {
-                float speedModifier = isSprinting ? SprintSpeedModifier : 1f;
+                // calculate the desired velocity from inputs, max speed, and current slope
+                Vector3 targetVelocity = worldspaceMoveInput * MaxSpeedOnGround * speedModifier;
+                // reduce speed if crouching by crouch speed ratio
+                if (IsCrouching)
+                    targetVelocity *= MaxSpeedCrouchedRatio;
+                targetVelocity = GetDirectionReorientedOnSlope(targetVelocity.normalized, m_GroundNormal) *
+                                 targetVelocity.magnitude;
 
-                // converts move input to a worldspace vector based on our character's transform orientation
-                Vector3 worldspaceMoveInput = transform.TransformVector(m_InputHandler.GetMoveInput());
+                // smoothly interpolate between our current velocity and the target velocity based on acceleration speed
+                CharacterVelocity = Vector3.Lerp(CharacterVelocity, targetVelocity,
+                    MovementSharpnessOnGround * Time.deltaTime);
 
-                // handle grounded movement
-                if (IsGrounded)
+                // jumping
+                if (IsGrounded && m_InputHandler.GetJumpInputDown())
                 {
-                    // calculate the desired velocity from inputs, max speed, and current slope
-                    Vector3 targetVelocity = worldspaceMoveInput * MaxSpeedOnGround * speedModifier;
-                    // reduce speed if crouching by crouch speed ratio
-                    if (IsCrouching)
-                        targetVelocity *= MaxSpeedCrouchedRatio;
-                    targetVelocity = GetDirectionReorientedOnSlope(targetVelocity.normalized, m_GroundNormal) *
-                                     targetVelocity.magnitude;
+                    // start by canceling out the vertical component of our velocity
+                    CharacterVelocity = new Vector3(CharacterVelocity.x, 0f, CharacterVelocity.z);
 
-                    // smoothly interpolate between our current velocity and the target velocity based on acceleration speed
-                    CharacterVelocity = Vector3.Lerp(CharacterVelocity, targetVelocity,
-                        MovementSharpnessOnGround * Time.deltaTime);
+                    // then, add the jumpSpeed value upwards
+                    CharacterVelocity += Vector3.up * JumpForce;
 
-                    // jumping
-                    if (IsGrounded && m_InputHandler.GetJumpInputDown())
-                    {
-                        // start by canceling out the vertical component of our velocity
-                        CharacterVelocity = new Vector3(CharacterVelocity.x, 0f, CharacterVelocity.z);
+                    // play sound
+                    AudioSource.PlayOneShot(JumpSfx);
 
-                        // then, add the jumpSpeed value upwards
-                        CharacterVelocity += Vector3.up * JumpForce;
+                    // remember last time we jumped because we need to prevent snapping to ground for a short time
+                    m_LastTimeJumped = Time.time;
+                    HasJumpedThisFrame = true;
 
-                        // play sound
-                        AudioSource.PlayOneShot(JumpSfx);
-
-                        // remember last time we jumped because we need to prevent snapping to ground for a short time
-                        m_LastTimeJumped = Time.time;
-                        HasJumpedThisFrame = true;
-
-                        // Force grounding to false
-                        IsGrounded = false;
-                        m_GroundNormal = Vector3.up;
-                    }
-
-                    // footsteps sound
-                    float chosenFootstepSfxFrequency =
-                        (isSprinting ? FootstepSfxFrequencyWhileSprinting : FootstepSfxFrequency);
-                    if (m_FootstepDistanceCounter >= 1f / chosenFootstepSfxFrequency)
-                    {
-                        m_FootstepDistanceCounter = 0f;
-                        AudioSource.PlayOneShot(FootstepSfx);
-                    }
-
-                    // keep track of distance traveled for footsteps sound
-                    m_FootstepDistanceCounter += CharacterVelocity.magnitude * Time.deltaTime;
+                    // Force grounding to false
+                    IsGrounded = false;
+                    m_GroundNormal = Vector3.up;
                 }
-                // handle air movement
-                else
+
+                // footsteps sound
+                if (m_FootstepDistanceCounter >= 1f / FootstepSfxFrequency)
                 {
-                    // add air acceleration
-                    CharacterVelocity += worldspaceMoveInput * AccelerationSpeedInAir * Time.deltaTime;
-
-                    // limit air speed to a maximum, but only horizontally
-                    float verticalVelocity = CharacterVelocity.y;
-                    Vector3 horizontalVelocity = Vector3.ProjectOnPlane(CharacterVelocity, Vector3.up);
-                    horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, MaxSpeedInAir * speedModifier);
-                    CharacterVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
-
-                    // apply the gravity to the velocity
-                    CharacterVelocity += Vector3.down * GravityDownForce * Time.deltaTime;
+                    m_FootstepDistanceCounter = 0f;
+                    AudioSource.PlayOneShot(FootstepSfx);
                 }
+
+                // keep track of distance traveled for footsteps sound
+                m_FootstepDistanceCounter += CharacterVelocity.magnitude * Time.deltaTime;
+            }
+            // handle air movement
+            else
+            {
+                // add air acceleration
+                CharacterVelocity += worldspaceMoveInput * AccelerationSpeedInAir * Time.deltaTime;
+
+                // limit air speed to a maximum, but only horizontally
+                float verticalVelocity = CharacterVelocity.y;
+                Vector3 horizontalVelocity = Vector3.ProjectOnPlane(CharacterVelocity, Vector3.up);
+                horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, MaxSpeedInAir * speedModifier);
+                CharacterVelocity = horizontalVelocity + (Vector3.up * verticalVelocity);
+
+                // apply the gravity to the velocity
+                CharacterVelocity += Vector3.down * GravityDownForce * Time.deltaTime;
             }
 
             // apply the final calculated velocity value as a character movement
