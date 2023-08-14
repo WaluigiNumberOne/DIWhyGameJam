@@ -16,6 +16,10 @@ public class DefaultHeart : Heart
         
     }
 
+    public override void onLoseHeart()
+    { 
+    
+    }
 
     public override void effects()
     {

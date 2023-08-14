@@ -21,8 +21,14 @@ public class MetalHeart : Heart
         }
     }
 
+    public override void onLoseHeart()
+    {
+        //Do nothing
+    }
+
     public override void effects()
     {
+        //Effect triggers on pickup
         if(!oneWayFlag)
         {
             oneWayFlag = true;
@@ -33,6 +39,7 @@ public class MetalHeart : Heart
 
     public override bool conditions()
     {
+        //if this is the active heart, trigger effect
         return active;
     }
 
