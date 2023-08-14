@@ -46,10 +46,16 @@ namespace Unity.FPS.UI
             {
                 Sprite img = m_PlayerHearts.hearts[i].spr;
                 
-                heartSlots[i+1].sprite = img;
-                heartSlots[i+1].color = Color.white;
+                heartSlots[i].sprite = img;
+                heartSlots[i].color = Color.white;
 
-                //Debug.Log("heart updated");
+                //Debug.Log("hearts updated");
+            }
+
+           //set other slots to clear
+           for(int j = m_PlayerHearts.hearts.Count; j < heartSlots.Count ; j++)
+            {
+                heartSlots[j].color = Color.clear;
             }
         }
     }
