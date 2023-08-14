@@ -105,11 +105,12 @@ namespace Unity.FPS.Gameplay
             }
         }
 
-        Health m_Health;
         PlayerInputHandler m_InputHandler;
         CharacterController m_Controller;
         PlayerWeaponsManager m_WeaponsManager;
+        PlayerHeartManager m_HeartManager;
         Actor m_Actor;
+
         Vector3 m_GroundNormal;
         Vector3 m_CharacterVelocity;
         Vector3 m_LatestImpactSpeed;
@@ -143,16 +144,14 @@ namespace Unity.FPS.Gameplay
             DebugUtility.HandleErrorIfNullGetComponent<PlayerWeaponsManager, PlayerCharacterController>(
                 m_WeaponsManager, this, gameObject);
 
-            m_Health = GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, PlayerCharacterController>(m_Health, this, gameObject);
+            m_HeartManager = GetComponent<PlayerHeartManager>();
+            DebugUtility.HandleErrorIfNullGetComponent<PlayerHeartManager, PlayerCharacterController>(m_HeartManager, this, gameObject);
 
             m_Actor = GetComponent<Actor>();
             DebugUtility.HandleErrorIfNullGetComponent<Actor, PlayerCharacterController>(m_Actor, this, gameObject);
 
             m_Controller.enableOverlapRecovery = true;
 
-            m_Health.OnDie += OnDie;
-            
             // Correct the centre of the capsule
             m_Controller.center = Vector3.up * m_Controller.height * 0.5f;
             
@@ -163,11 +162,13 @@ namespace Unity.FPS.Gameplay
 
         void Update()
         {
-            // check for Y kill
-            if (!IsDead && transform.position.y < KillHeight)
+            // check for kill
+            /*
+            if (!IsDead)
             {
-                m_Health.Kill();
+                
             }
+            */
 
             HasJumpedThisFrame = false;
 
@@ -183,8 +184,10 @@ namespace Unity.FPS.Gameplay
                                        (MaxSpeedForFallDamage - MinSpeedForFallDamage);
                 if (RecievesFallDamage && fallSpeedRatio > 0f)
                 {
+                    /*
                     float dmgFromFall = Mathf.Lerp(FallDamageAtMinSpeed, FallDamageAtMaxSpeed, fallSpeedRatio);
-                    m_Health.TakeDamage(dmgFromFall, null);
+                    m_HeartManager.TakeDamage(dmgFromFall);
+                    */
 
                     // fall damage SFX
                     AudioSource.PlayOneShot(FallDamageSfx);

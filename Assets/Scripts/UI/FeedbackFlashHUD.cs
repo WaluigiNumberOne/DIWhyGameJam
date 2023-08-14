@@ -42,29 +42,29 @@ namespace Unity.FPS.UI
 
         bool m_FlashActive;
         float m_LastTimeFlashStarted = Mathf.NegativeInfinity;
-        Health m_PlayerHealth;
+        PlayerHeartManager m_PlayerHearts;
         GameFlowManager m_GameFlowManager;
 
         void Start()
         {
+            VignetteCanvasGroup.gameObject.SetActive(false);
+
             // Subscribe to player damage events
             PlayerCharacterController playerCharacterController = FindObjectOfType<PlayerCharacterController>();
             DebugUtility.HandleErrorIfNullFindObject<PlayerCharacterController, FeedbackFlashHUD>(
                 playerCharacterController, this);
 
-            m_PlayerHealth = playerCharacterController.GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, FeedbackFlashHUD>(m_PlayerHealth, this,
+            m_PlayerHearts = playerCharacterController.GetComponent<PlayerHeartManager>();
+            DebugUtility.HandleErrorIfNullGetComponent<PlayerHeartManager, FeedbackFlashHUD>(m_PlayerHearts, this,
                 playerCharacterController.gameObject);
 
             m_GameFlowManager = FindObjectOfType<GameFlowManager>();
             DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, FeedbackFlashHUD>(m_GameFlowManager, this);
-
-            m_PlayerHealth.OnDamaged += OnTakeDamage;
-            m_PlayerHealth.OnHealed += OnHealed;
         }
 
         void Update()
         {
+            /* IF WE GET AROUND TO IT IG WE CAN REUSE THIS
             if (m_PlayerHealth.IsCritical())
             {
                 VignetteCanvasGroup.gameObject.SetActive(true);
@@ -82,6 +82,7 @@ namespace Unity.FPS.UI
             {
                 VignetteCanvasGroup.gameObject.SetActive(false);
             }
+            */
 
 
             if (m_FlashActive)

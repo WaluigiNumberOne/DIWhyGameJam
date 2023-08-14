@@ -5,20 +5,29 @@ using UnityEngine;
 
 public class PlayerHeartManager : MonoBehaviour
 {
-    private List<Heart> hearts = new List<Heart>();
-    private Heart activeHeart;
+    public List<Heart> hearts = new List<Heart>();
+    public Heart activeHeart;
+
+    public bool Invincible;
+    public bool tookDamage; //flag for Updating UI
 
 
     // Start is called before the first frame update
     void Start()
     {
+        //Testing
         DefaultHeart dh = gameObject.AddComponent<DefaultHeart>();
         MetalHeart mh = gameObject.AddComponent<MetalHeart>();
 
         hearts.Add(dh);
+        hearts.Add(dh);
+        hearts.Add(dh);
         hearts.Add(mh);
+        //---------------------------------------------------------
 
         setActiveHeart();
+
+        tookDamage = true;
 
     }
 
@@ -30,6 +39,27 @@ public class PlayerHeartManager : MonoBehaviour
     public void setActiveHeart()
     {
         activeHeart = hearts.Last();
-        activeHeart.active = true;
+        if(!activeHeart)
+        {
+            Die();
+        }
+        else
+        {
+            activeHeart.active = true;
+        }
+    }
+
+    public void takeDamage()
+    {
+        if(!Invincible)
+        {
+            //do damage
+            tookDamage = true;
+        }
+    }
+
+    private void Die()
+    {
+
     }
 }

@@ -30,7 +30,7 @@ namespace Unity.FPS.UI
         public GameObject ControlImage;
 
         PlayerInputHandler m_PlayerInputsHandler;
-        Health m_PlayerHealth;
+        PlayerHeartManager m_PlayerHearts;
         FramerateCounter m_FramerateCounter;
 
         void Start()
@@ -39,8 +39,8 @@ namespace Unity.FPS.UI
             DebugUtility.HandleErrorIfNullFindObject<PlayerInputHandler, InGameMenuManager>(m_PlayerInputsHandler,
                 this);
 
-            m_PlayerHealth = m_PlayerInputsHandler.GetComponent<Health>();
-            DebugUtility.HandleErrorIfNullGetComponent<Health, InGameMenuManager>(m_PlayerHealth, this, gameObject);
+            m_PlayerHearts = m_PlayerInputsHandler.GetComponent<PlayerHeartManager>();
+            DebugUtility.HandleErrorIfNullGetComponent<PlayerHeartManager, InGameMenuManager>(m_PlayerHearts, this, gameObject);
 
             m_FramerateCounter = FindObjectOfType<FramerateCounter>();
             DebugUtility.HandleErrorIfNullFindObject<FramerateCounter, InGameMenuManager>(m_FramerateCounter, this);
@@ -53,7 +53,7 @@ namespace Unity.FPS.UI
             ShadowsToggle.isOn = QualitySettings.shadows != ShadowQuality.Disable;
             ShadowsToggle.onValueChanged.AddListener(OnShadowsChanged);
 
-            InvincibilityToggle.isOn = m_PlayerHealth.Invincible;
+            InvincibilityToggle.isOn = m_PlayerHearts.Invincible;
             InvincibilityToggle.onValueChanged.AddListener(OnInvincibilityChanged);
 
             FramerateToggle.isOn = m_FramerateCounter.UIText.gameObject.activeSelf;
@@ -138,7 +138,7 @@ namespace Unity.FPS.UI
 
         void OnInvincibilityChanged(bool newValue)
         {
-            m_PlayerHealth.Invincible = newValue;
+            m_PlayerHearts.Invincible = newValue;
         }
 
         void OnFramerateCounterChanged(bool newValue)

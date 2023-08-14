@@ -9,7 +9,7 @@ public class MetalHeart : Heart
     // Start is called before the first frame update
     void Start()
     {
-        
+        spr = setSprite();
     }
 
     // Update is called once per frame
@@ -34,5 +34,11 @@ public class MetalHeart : Heart
     public override bool conditions()
     {
         return active;
+    }
+
+    public override Sprite setSprite()
+    {
+        var sprite = Resources.Load<Sprite>("PlaceholderMetalHeart");
+        return sprite;
     }
 }
