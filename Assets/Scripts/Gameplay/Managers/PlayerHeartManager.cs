@@ -18,10 +18,11 @@ public class PlayerHeartManager : MonoBehaviour
         //Testing
         DefaultHeart dh = gameObject.AddComponent<DefaultHeart>();
         MetalHeart mh = gameObject.AddComponent<MetalHeart>();
+        BombHeart bh = gameObject.AddComponent<BombHeart>();
 
         hearts.Add(dh);
         hearts.Add(dh);
-        hearts.Add(dh);
+        hearts.Add(bh);
         hearts.Add(mh);
         //---------------------------------------------------------
 
@@ -34,7 +35,7 @@ public class PlayerHeartManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*                                      TESTING DAMAGE
+        /*                                  TESTING DAMAGE
         if (Input.GetKeyDown(KeyCode.O))
         {
             takeDamage(1f);
@@ -79,9 +80,10 @@ public class PlayerHeartManager : MonoBehaviour
 
     private void LoseHeart()
     {
+        activeHeart.onLoseHeart();
+
         hearts.Remove(activeHeart);
         Debug.Log("lost heart");
-
 
         setActiveHeart();
     }
