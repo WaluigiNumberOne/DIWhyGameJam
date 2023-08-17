@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.FPS.Gameplay;
 using UnityEngine;
 
 public class PlayerHeartManager : MonoBehaviour
@@ -19,11 +20,14 @@ public class PlayerHeartManager : MonoBehaviour
         DefaultHeart dh = gameObject.AddComponent<DefaultHeart>();
         MetalHeart mh = gameObject.AddComponent<MetalHeart>();
         BombHeart bh = gameObject.AddComponent<BombHeart>();
+        SpeedHeart sh = gameObject.AddComponent<SpeedHeart>();
+        JumpHeart jh = gameObject.AddComponent<JumpHeart>();
 
         hearts.Add(dh);
-        hearts.Add(dh);
+        hearts.Add(sh);
         hearts.Add(bh);
         hearts.Add(mh);
+        hearts.Add(jh);
         //---------------------------------------------------------
 
         setActiveHeart();
@@ -76,6 +80,8 @@ public class PlayerHeartManager : MonoBehaviour
     {
         //oof ouch ow
         Debug.Log("You idiot you ran out of hearts now youre dead I hate you");
+        //PlayerCharacterController pcc = FindObjectOfType<PlayerCharacterController>();
+        //pcc.OnDie();
     }
 
     private void LoseHeart()

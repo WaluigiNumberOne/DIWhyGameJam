@@ -663,6 +663,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3092486387160054503, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3103198431971518962, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594028634452544105, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3594028634452544105, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3634159038634904188, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 3872878727614772150, guid: 7ff14361843237d43afc85e1cb16e295,
         type: 3}
       propertyPath: m_fontSize
@@ -729,6 +754,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GameHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 6682394985867442187, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6816410738098532768, guid: 7ff14361843237d43afc85e1cb16e295,
         type: 3}
@@ -799,6 +829,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216199654032580552, guid: 7ff14361843237d43afc85e1cb16e295,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5917255261459168744, guid: 7ff14361843237d43afc85e1cb16e295, type: 3}

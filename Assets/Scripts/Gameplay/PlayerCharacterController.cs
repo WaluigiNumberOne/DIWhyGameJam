@@ -162,14 +162,7 @@ namespace Unity.FPS.Gameplay
 
         void Update()
         {
-            // check for kill
-            /*
-            if (!IsDead)
-            {
-                
-            }
-            */
-
+        
             HasJumpedThisFrame = false;
 
             bool wasGrounded = IsGrounded;
@@ -202,7 +195,7 @@ namespace Unity.FPS.Gameplay
             HandleCharacterMovement();
         }
 
-        void OnDie()
+        public void OnDie()
         {
             IsDead = true;
 

@@ -10,15 +10,12 @@ public class MetalHeart : Heart
     void Start()
     {
         spr = setSprite();
+        effects();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (conditions())
-        {
-            effects();
-        }
     }
 
     public override void onLoseHeart()
