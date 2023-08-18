@@ -8,7 +8,7 @@ public class JumpHeart : Heart
     int jumpHeartBonus = 2; // How much more force does 1 heart give us
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         spr = setSprite();
         effects();

@@ -28242,7 +28242,7 @@ MonoBehaviour:
   RotatingSpeed: 360
   PickupSfx: {fileID: 0}
   PickupVfxPrefab: {fileID: 0}
-  heartType: 1
+  heartType: 5
 --- !u!54 &1086530163
 Rigidbody:
   m_ObjectHideFlags: 0

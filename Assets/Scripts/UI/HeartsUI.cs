@@ -45,7 +45,10 @@ namespace Unity.FPS.UI
            for(int i = 0; i < m_PlayerHearts.hearts.Count; i++)
             {
                 Sprite img = m_PlayerHearts.hearts[i].spr;
-                
+                if(!img)
+                {
+                    Debug.Log("No sprite found for: " + m_PlayerHearts.hearts[i]);
+                }
                 heartSlots[i].sprite = img;
                 heartSlots[i].color = Color.white;
 

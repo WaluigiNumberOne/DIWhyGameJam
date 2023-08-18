@@ -8,6 +8,7 @@ public class PlayerHeartManager : MonoBehaviour
 {
     public List<Heart> hearts = new List<Heart>();
     public Heart activeHeart;
+    public int activeHeartType;
 
     public bool Invincible;
     public bool healthChanged; //flag for Updating UI
@@ -17,12 +18,11 @@ public class PlayerHeartManager : MonoBehaviour
     void Start()
     {
         //Testing
+        AddHeart(1);
+        AddHeart(2);
+        AddHeart(3);
+        AddHeart(1);
 
-        hearts.Add(gameObject.AddComponent<DefaultHeart>());
-        hearts.Add(gameObject.AddComponent<MetalHeart>());
-        hearts.Add(gameObject.AddComponent<SpeedHeart>());
-        hearts.Add(gameObject.AddComponent<BombHeart>());
-        hearts.Add(gameObject.AddComponent<JumpHeart>());
         //---------------------------------------------------------
 
         setActiveHeart();
@@ -83,24 +83,34 @@ public class PlayerHeartManager : MonoBehaviour
         {
             case 0:
                 hearts.Add(gameObject.AddComponent<DefaultHeart>());
+                activeHeartType = 0;
                 break;
             case 1:
                 hearts.Add(gameObject.AddComponent<SpeedHeart>());
+                activeHeartType = 1;
                 break;
             case 2:
                 hearts.Add(gameObject.AddComponent<JumpHeart>());
+                activeHeartType = 2;
                 break;
             case 3:
                 hearts.Add(gameObject.AddComponent<MetalHeart>());
+                activeHeartType = 3;
                 break;
             case 4:
                 hearts.Add(gameObject.AddComponent<BombHeart>());
+                activeHeartType = 4;
+                break;
+            case 5:
+                hearts.Add(gameObject.AddComponent<CopyHeart>());
                 break;
             default:
                 break;
         }
         healthChanged = true;
-        activeHeart.active = false;
+
+        if(activeHeart) activeHeart.active = false;
+
         setActiveHeart();
     }
 

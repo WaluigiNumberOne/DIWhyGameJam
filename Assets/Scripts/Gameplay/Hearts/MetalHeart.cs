@@ -7,7 +7,7 @@ public class MetalHeart : Heart
     bool oneWayFlag = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         spr = setSprite();
         effects();

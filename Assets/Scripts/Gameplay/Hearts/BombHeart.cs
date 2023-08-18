@@ -7,7 +7,7 @@ public class BombHeart : Heart
     Explosion explosionPrefab;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         spr = setSprite();
         explosionPrefab = Resources.Load<Explosion>("Explosion");
