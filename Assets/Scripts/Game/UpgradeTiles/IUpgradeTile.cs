@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.FPS.Game;
+using UnityEngine;
 
-namespace Unity.FPS.Gameplay.UpgradeTiles
+namespace Unity.FPS.Game.UpgradeTiles
 {
     public interface IUpgradeTile
     {

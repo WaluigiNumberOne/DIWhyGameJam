@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Unity.FPS.Gameplay.UpgradeTiles
+namespace Unity.FPS.Game.UpgradeTiles
 {
     public class TileProperties : MonoBehaviour
     {

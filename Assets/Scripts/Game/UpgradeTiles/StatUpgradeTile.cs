@@ -1,8 +1,9 @@
 ﻿using System;
+using Unity.FPS.Game;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Unity.FPS.Gameplay.UpgradeTiles
+namespace Unity.FPS.Game.UpgradeTiles
 {
     /// <summary>
     /// Increases one stat on the given weapon by a fixed amount.
@@ -12,7 +13,7 @@ namespace Unity.FPS.Gameplay.UpgradeTiles
         public enum Type
         {
             None,
-            Barrels,
+            ProjectilesPerShot,
             FireTime,
             Damage,
             ReloadTime,
@@ -33,26 +34,27 @@ namespace Unity.FPS.Gameplay.UpgradeTiles
             {
                 case Type.None:
                     break;
-                case Type.Barrels:
-                    stats.BarrelCount += (int) amount;
+                case Type.ProjectilesPerShot:
+                    stats.projectilesPerShot += (int)amount;
+                    stats.ammoCostPerShot += (int)amount;
                     break;
                 case Type.FireTime:
-                    stats.ShotCooldownSeconds += amount;
+                    stats.shotCooldownSeconds += amount;
                     break;
                 case Type.Damage:
-                    stats.Damage += (int) amount;
+                    stats.damage += (int) amount;
                     break;
                 case Type.ReloadTime:
-                    stats.ReloadTimeSeconds += amount;
+                    stats.reloadTimeSeconds += amount;
                     break;
                 case Type.Spread:
-                    stats.SpreadRadians += amount;
+                    stats.spreadRadians += amount;
                     break;
                 case Type.ClipSize:
-                    stats.ClipSize += (int) amount;
+                    stats.clipSize += (int) amount;
                     break;
                 case Type.Recoil:
-                    stats.RecoilRadians += amount;
+                    stats.recoilRadians += amount;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

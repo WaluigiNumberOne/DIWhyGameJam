@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.FPS.Game.UpgradeTiles;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +29,15 @@ namespace Unity.FPS.Game
     [RequireComponent(typeof(AudioSource))]
     public class WeaponController : MonoBehaviour
     {
+        [Tooltip("The base stats the weapon has, before modifiers")]
+        public GunStats baseStats;
+
+        [NonSerialized]
+        private GunStats _cachedStats;
+
+        [Tooltip("The gameobject that holds the UpgradeTiles used when calculating stats")]
+        public GameObject upgradeHolder;
+        
         [Header("Information")] [Tooltip("The name that will be displayed in the UI for this weapon")]
         public string WeaponName;
 
@@ -52,15 +62,6 @@ namespace Unity.FPS.Game
 
         [Tooltip("The projectile prefab")] public ProjectileBase ProjectilePrefab;
 
-        [Tooltip("Minimum duration between two shots")]
-        public float DelayBetweenShots = 0.5f;
-
-        [Tooltip("Angle for the cone in which the bullets will be shot randomly (0 means no spread at all)")]
-        public float BulletSpreadAngle = 0f;
-
-        [Tooltip("Amount of bullets per shot")]
-        public int BulletsPerShot = 1;
-
         [Tooltip("Force that will push back the weapon after each shot")] [Range(0f, 2f)]
         public float RecoilForce = 1;
 
@@ -75,8 +76,6 @@ namespace Unity.FPS.Game
         public bool AutomaticReload = true;
         [Tooltip("Has physical clip on the weapon and ammo shells are ejected when firing")]
         public bool HasPhysicalBullets = false;
-        [Tooltip("Number of bullets in a clip")]
-        public int ClipSize = 30;
         [Tooltip("Bullet Shell Casing")]
         public GameObject ShellCasing;
         [Tooltip("Weapon Ejection Port for physical ammo")]
@@ -90,9 +89,6 @@ namespace Unity.FPS.Game
 
         [Tooltip("Delay after the last shot before starting to reload")]
         public float AmmoReloadDelay = 2f;
-
-        [Tooltip("Maximum amount of ammo in the gun")]
-        public int MaxAmmo = 8;
 
         [Header("Charging parameters (charging weapons only)")]
         [Tooltip("Trigger a shot when maximum charge is reached")]
@@ -150,7 +146,7 @@ namespace Unity.FPS.Game
 
         public float GetAmmoNeededToShoot() =>
             (ShootType != WeaponShootType.Charge ? 1f : Mathf.Max(1f, AmmoUsedOnStartCharge)) /
-            (MaxAmmo * BulletsPerShot);
+            (_cachedStats.clipSize * _cachedStats.ammoCostPerShot);
 
         public int GetCarriedPhysicalBullets() => m_CarriedPhysicalBullets;
         public int GetCurrentAmmo() => Mathf.FloorToInt(m_CurrentAmmo);
@@ -165,8 +161,11 @@ namespace Unity.FPS.Game
 
         void Awake()
         {
-            m_CurrentAmmo = MaxAmmo;
-            m_CarriedPhysicalBullets = HasPhysicalBullets ? ClipSize : 0;
+            // Cache initial stats
+            RecalculateStatsCache();
+            
+            m_CurrentAmmo = _cachedStats.clipSize;
+            m_CarriedPhysicalBullets = HasPhysicalBullets ? _cachedStats.clipSize : 0;
             m_LastMuzzlePosition = WeaponMuzzle.position;
 
             m_ShootAudioSource = GetComponent<AudioSource>();
@@ -196,7 +195,7 @@ namespace Unity.FPS.Game
             }
         }
 
-        public void AddCarriablePhysicalBullets(int count) => m_CarriedPhysicalBullets = Mathf.Max(m_CarriedPhysicalBullets + count, MaxAmmo);
+        public void AddCarriablePhysicalBullets(int count) => m_CarriedPhysicalBullets = Mathf.Max(m_CarriedPhysicalBullets + count, _cachedStats.clipSize);
 
         void ShootShell()
         {
@@ -219,7 +218,7 @@ namespace Unity.FPS.Game
         {
             if (m_CarriedPhysicalBullets > 0)
             {
-                m_CurrentAmmo = Mathf.Min(m_CarriedPhysicalBullets, ClipSize);
+                m_CurrentAmmo = Mathf.Min(m_CarriedPhysicalBullets, _cachedStats.clipSize);
             }
 
             IsReloading = false;
@@ -249,13 +248,13 @@ namespace Unity.FPS.Game
 
         void UpdateAmmo()
         {
-            if (AutomaticReload && m_LastTimeShot + AmmoReloadDelay < Time.time && m_CurrentAmmo < MaxAmmo && !IsCharging)
+            if (AutomaticReload && m_LastTimeShot + AmmoReloadDelay < Time.time && m_CurrentAmmo < _cachedStats.clipSize && !IsCharging)
             {
                 // reloads weapon over time
                 m_CurrentAmmo += AmmoReloadRate * Time.deltaTime;
 
                 // limits ammo to max value
-                m_CurrentAmmo = Mathf.Clamp(m_CurrentAmmo, 0, MaxAmmo);
+                m_CurrentAmmo = Mathf.Clamp(m_CurrentAmmo, 0, _cachedStats.clipSize);
 
                 IsCooling = true;
             }
@@ -264,13 +263,13 @@ namespace Unity.FPS.Game
                 IsCooling = false;
             }
 
-            if (MaxAmmo == Mathf.Infinity)
+            if (_cachedStats.clipSize == Mathf.Infinity)
             {
                 CurrentAmmoRatio = 1f;
             }
             else
             {
-                CurrentAmmoRatio = m_CurrentAmmo / MaxAmmo;
+                CurrentAmmoRatio = m_CurrentAmmo / _cachedStats.clipSize;
             }
         }
 
@@ -344,9 +343,9 @@ namespace Unity.FPS.Game
 
         public void UseAmmo(float amount)
         {
-            m_CurrentAmmo = Mathf.Clamp(m_CurrentAmmo - amount, 0f, MaxAmmo);
+            m_CurrentAmmo = Mathf.Clamp(m_CurrentAmmo - amount, 0f, _cachedStats.clipSize);
             m_CarriedPhysicalBullets -= Mathf.RoundToInt(amount);
-            m_CarriedPhysicalBullets = Mathf.Clamp(m_CarriedPhysicalBullets, 0, MaxAmmo);
+            m_CarriedPhysicalBullets = Mathf.Clamp(m_CarriedPhysicalBullets, 0, _cachedStats.clipSize);
             m_LastTimeShot = Time.time;
         }
 
@@ -392,11 +391,13 @@ namespace Unity.FPS.Game
 
         bool TryShoot()
         {
-            if (m_CurrentAmmo >= 1f
-                && m_LastTimeShot + DelayBetweenShots < Time.time)
+            if (
+                m_CurrentAmmo >= 1f
+                && m_LastTimeShot + _cachedStats.shotCooldownSeconds < Time.time
+                )
             {
                 HandleShoot();
-                m_CurrentAmmo -= 1f;
+                m_CurrentAmmo -= _cachedStats.ammoCostPerShot;
 
                 return true;
             }
@@ -408,8 +409,8 @@ namespace Unity.FPS.Game
         {
             if (!IsCharging
                 && m_CurrentAmmo >= AmmoUsedOnStartCharge
-                && Mathf.FloorToInt((m_CurrentAmmo - AmmoUsedOnStartCharge) * BulletsPerShot) > 0
-                && m_LastTimeShot + DelayBetweenShots < Time.time)
+                && Mathf.FloorToInt((m_CurrentAmmo - AmmoUsedOnStartCharge) * _cachedStats.ammoCostPerShot) > 0
+                && m_LastTimeShot + _cachedStats.shotCooldownSeconds < Time.time)
             {
                 UseAmmo(AmmoUsedOnStartCharge);
 
@@ -440,8 +441,8 @@ namespace Unity.FPS.Game
         void HandleShoot()
         {
             int bulletsPerShotFinal = ShootType == WeaponShootType.Charge
-                ? Mathf.CeilToInt(CurrentCharge * BulletsPerShot)
-                : BulletsPerShot;
+                ? Mathf.CeilToInt(CurrentCharge * _cachedStats.projectilesPerShot)
+                : _cachedStats.projectilesPerShot;
 
             // spawn all bullets with random direction
             for (int i = 0; i < bulletsPerShotFinal; i++)
@@ -492,11 +493,24 @@ namespace Unity.FPS.Game
 
         public Vector3 GetShotDirectionWithinSpread(Transform shootTransform)
         {
-            float spreadAngleRatio = BulletSpreadAngle / 180f;
+            float spreadAngleRatio = _cachedStats.spreadRadians;
             Vector3 spreadWorldDirection = Vector3.Slerp(shootTransform.forward, UnityEngine.Random.insideUnitSphere,
                 spreadAngleRatio);
 
             return spreadWorldDirection;
+        }
+
+        /// <summary>
+        /// Call this to recalculate gun stats based on a combination of base stats and added upgrade tiles.
+        /// </summary>
+        public void RecalculateStatsCache()
+        {
+            GunStats stats = (GunStats)baseStats.Clone();
+            
+            foreach (IUpgradeTile tile in upgradeHolder.GetComponentsInChildren<IUpgradeTile>())
+                tile.ApplyStats(stats);
+            
+            _cachedStats = stats.Normalise();
         }
     }
 }
