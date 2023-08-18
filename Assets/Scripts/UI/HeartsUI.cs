@@ -33,10 +33,10 @@ namespace Unity.FPS.UI
         // Update is called once per frame
         void Update()
         {
-            if(m_PlayerHearts.tookDamage)
+            if(m_PlayerHearts.healthChanged)
             {
                 UpdateHeartUI();
-                m_PlayerHearts.tookDamage = false;
+                m_PlayerHearts.healthChanged = false;
             }
         }
 

@@ -10,41 +10,36 @@ public class PlayerHeartManager : MonoBehaviour
     public Heart activeHeart;
 
     public bool Invincible;
-    public bool tookDamage; //flag for Updating UI
+    public bool healthChanged; //flag for Updating UI
 
 
     // Start is called before the first frame update
     void Start()
     {
         //Testing
-        DefaultHeart dh = gameObject.AddComponent<DefaultHeart>();
-        MetalHeart mh = gameObject.AddComponent<MetalHeart>();
-        BombHeart bh = gameObject.AddComponent<BombHeart>();
-        SpeedHeart sh = gameObject.AddComponent<SpeedHeart>();
-        JumpHeart jh = gameObject.AddComponent<JumpHeart>();
 
-        hearts.Add(dh);
-        hearts.Add(sh);
-        hearts.Add(bh);
-        hearts.Add(mh);
-        hearts.Add(jh);
+        hearts.Add(gameObject.AddComponent<DefaultHeart>());
+        hearts.Add(gameObject.AddComponent<MetalHeart>());
+        hearts.Add(gameObject.AddComponent<SpeedHeart>());
+        hearts.Add(gameObject.AddComponent<BombHeart>());
+        hearts.Add(gameObject.AddComponent<JumpHeart>());
         //---------------------------------------------------------
 
         setActiveHeart();
 
-        tookDamage = true;
+        healthChanged = true;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*                                  TESTING DAMAGE
+        ///*                                  TESTING DAMAGE
         if (Input.GetKeyDown(KeyCode.O))
         {
             takeDamage(1f);
         }
-        */
+        //*/
     }
 
     public void setActiveHeart()
@@ -72,8 +67,41 @@ public class PlayerHeartManager : MonoBehaviour
             {
                 LoseHeart();
             }
-            tookDamage = true;
+            healthChanged = true;
         }
+    }
+
+    public void AddHeart(int type)
+    {    
+        //0 ->  default heart
+        //1 ->  speed heart
+        //2 ->  jump heart
+        //3 ->  metal heart
+        //4 ->  bomb heart
+
+        switch(type)
+        {
+            case 0:
+                hearts.Add(gameObject.AddComponent<DefaultHeart>());
+                break;
+            case 1:
+                hearts.Add(gameObject.AddComponent<SpeedHeart>());
+                break;
+            case 2:
+                hearts.Add(gameObject.AddComponent<JumpHeart>());
+                break;
+            case 3:
+                hearts.Add(gameObject.AddComponent<MetalHeart>());
+                break;
+            case 4:
+                hearts.Add(gameObject.AddComponent<BombHeart>());
+                break;
+            default:
+                break;
+        }
+        healthChanged = true;
+        activeHeart.active = false;
+        setActiveHeart();
     }
 
     private void Die()
@@ -90,7 +118,9 @@ public class PlayerHeartManager : MonoBehaviour
 
         hearts.Remove(activeHeart);
         Debug.Log("lost heart");
+        Destroy(activeHeart);
 
         setActiveHeart();
     }
+
 }

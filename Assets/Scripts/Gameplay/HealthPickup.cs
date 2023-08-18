@@ -5,18 +5,20 @@ namespace Unity.FPS.Gameplay
 {
     public class HealthPickup : Pickup
     {
-        [Header("Parameters")] [Tooltip("Amount of health to heal on pickup")]
-        public float HealAmount;
+        public int heartType;
+
+
+        //0 ->  default heart
+        //1 ->  speed heart
+        //2 ->  jump heart
+        //3 ->  metal heart
+        //4 ->  bomb heart
 
         protected override void OnPicked(PlayerCharacterController player)
         {
-            Health playerHealth = player.GetComponent<Health>();
-            if (playerHealth && playerHealth.CanPickup())
-            {
-                playerHealth.Heal(HealAmount);
-                PlayPickupFeedback();
-                Destroy(gameObject);
-            }
+            player.GetComponent<PlayerHeartManager>().AddHeart(heartType);
+            PlayPickupFeedback();
+            Destroy(gameObject);
         }
     }
 }
