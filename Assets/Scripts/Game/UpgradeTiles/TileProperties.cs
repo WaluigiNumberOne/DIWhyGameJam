@@ -18,6 +18,44 @@ namespace Unity.FPS.Game.UpgradeTiles
             ThreeByThreeS,
             ThreeByThreeT
         }
+
+        // This is hilarious
+        private readonly byte[][] _shape1By1 = new byte[][] { new byte[] { 1 } };
+        private readonly byte[][] _shape2By1 = new byte[][] { new byte[] { 1, 1 } };
+        private readonly byte[][] _shape2By2 = new byte[][]
+        {
+            new byte[] {1, 1},
+            new byte[] {1, 1}
+        };
+        private readonly byte[][] _shape2By2L = new byte[][]
+        {
+            new byte[] {1, 0},
+            new byte[] {1, 1}
+        };
+        private readonly byte[][] _shape3By3 = new byte[][]
+        {
+            new byte[] {1, 1, 1},
+            new byte[] {1, 1, 1},
+            new byte[] {1, 1, 1}
+        };
+        private readonly byte[][] _shape3By3L = new byte[][]
+        {
+            new byte[] {1, 0, 0},
+            new byte[] {1, 0, 0},
+            new byte[] {1, 1, 1}
+        };
+        private readonly byte[][] _shape3By3S = new byte[][]
+        {
+            new byte[] {0, 1, 1},
+            new byte[] {0, 1, 0},
+            new byte[] {1, 1, 0}
+        };
+        private readonly byte[][] _shape3By3T = new byte[][]
+        {
+            new byte[] {1, 1, 1},
+            new byte[] {0, 1, 0},
+            new byte[] {0, 1, 0}
+        };
         
         [Tooltip("The shape of the tile.")]
         public TileShape shape = TileShape.OneByOne;
@@ -31,31 +69,26 @@ namespace Unity.FPS.Game.UpgradeTiles
         /// <summary>
         /// The X position of the upper-left of the tile in the grid.
         /// </summary>
-        [NonSerialized]
-        public ushort PositionX = 0;
+        public ushort positionX = 0;
         
         /// <summary>
         /// The Y position of the upper-left of the tile in the grid.
         /// </summary>
-        [NonSerialized]
-        public ushort PositionY = 0;
+        public ushort positionY = 0;
 
         /// <summary>
         /// Whether the tile is horizontally flipped (Where x = -1 becomes x = 1).
         /// </summary>
-        [NonSerialized]
-        public bool HorizontalFlip = false;
+        public bool horizontalFlip = false;
         
         /// <summary>
         /// Whether the tile is vertically flipped (Where y = -1 becomes y = 1).
         /// </summary>
-        [NonSerialized]
-        public bool VerticalFlip = false;
+        public bool verticalFlip = false;
 
         /// <summary>
         /// The rotation of the tile, multiplied by 90 degrees. IE, 2 = 180 degrees.
         /// </summary>
-        [NonSerialized]
-        public byte Rotation = 0;
+        public byte rotation = 0;
     }
 }
