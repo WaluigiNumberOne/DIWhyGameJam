@@ -28,7 +28,7 @@ public class RechargeableHeart : Heart
         if(damaged)
         {
             damagedTime += Time.deltaTime;
-            Debug.Log(damagedTime);
+            //Debug.Log(damagedTime);
         }
 
         if(damagedTime >= TIME_UNTIL_REGEN)

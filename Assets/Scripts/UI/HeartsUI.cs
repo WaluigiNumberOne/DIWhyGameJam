@@ -13,6 +13,10 @@ namespace Unity.FPS.UI
         private PlayerHeartManager m_PlayerHearts;
         private List<Image> heartSlots;
 
+        float activeHeartSize = 1f;
+        float heartScalingTime = 0f;
+        float MAX_SCALE_TIME = 2;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -38,6 +42,27 @@ namespace Unity.FPS.UI
                 UpdateHeartUI();
                 m_PlayerHearts.healthChanged = false;
             }
+
+
+            //Scale Active Heart
+            heartScalingTime += Time.deltaTime;
+
+            // 0-1
+            if(heartScalingTime < MAX_SCALE_TIME/2)
+            {
+                activeHeartSize = 1 + .25f * heartScalingTime;
+            }
+            //1-2
+            else if(heartScalingTime > MAX_SCALE_TIME/2 && heartScalingTime < MAX_SCALE_TIME)
+            {
+                activeHeartSize = 1.25f - (.25f * (heartScalingTime - 1));
+            }
+            //RESET
+            else if(heartScalingTime > MAX_SCALE_TIME)
+            {
+                heartScalingTime = 0;
+            }
+            heartSlots[m_PlayerHearts.hearts.Count - 1].rectTransform.localScale = Vector2.one * activeHeartSize;
         }
 
         public void UpdateHeartUI()
