@@ -48,6 +48,7 @@ public class PlayerHeartManager : MonoBehaviour
         {
             activeHeart = hearts.Last();
             activeHeart.active = true;
+            activeHeartType = activeHeart.type;
         }
         catch (System.Exception)
         {
@@ -85,30 +86,24 @@ public class PlayerHeartManager : MonoBehaviour
         {
             case 0:
                 hearts.Add(gameObject.AddComponent<DefaultHeart>());
-                activeHeartType = 0;
                 break;
             case 1:
                 hearts.Add(gameObject.AddComponent<SpeedHeart>());
-                activeHeartType = 1;
                 break;
             case 2:
                 hearts.Add(gameObject.AddComponent<JumpHeart>());
-                activeHeartType = 2;
                 break;
             case 3:
                 hearts.Add(gameObject.AddComponent<MetalHeart>());
-                activeHeartType = 3;
                 break;
             case 4:
                 hearts.Add(gameObject.AddComponent<BombHeart>());
-                activeHeartType = 4;
                 break;
             case 5:
                 hearts.Add(gameObject.AddComponent<CopyHeart>());
                 break;
             case 6:
                 hearts.Add(gameObject.AddComponent<RechargeableHeart>());
-                activeHeartType = 6;
                 break;
             default:
                 break;

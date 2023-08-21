@@ -12,6 +12,7 @@ public class RechargeableHeart : Heart
     // Start is called before the first frame update
     void Awake()
     {
+        type = 6;
         spr = setSprite();
         effects();
     }

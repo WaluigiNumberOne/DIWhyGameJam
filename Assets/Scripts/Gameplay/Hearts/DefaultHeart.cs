@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class DefaultHeart : Heart
 {
+    
     // Start is called before the first frame update
     void Awake()
     {
+        type = 0;
         spr = setSprite();
     }
 

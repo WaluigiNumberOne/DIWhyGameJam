@@ -10,6 +10,7 @@ public class JumpHeart : Heart
     // Start is called before the first frame update
     void Awake()
     {
+        type = 2;
         spr = setSprite();
         effects();
     }

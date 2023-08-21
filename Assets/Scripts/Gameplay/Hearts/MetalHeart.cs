@@ -9,6 +9,7 @@ public class MetalHeart : Heart
     // Start is called before the first frame update
     void Awake()
     {
+        type = 3;
         spr = setSprite();
         effects();
     }

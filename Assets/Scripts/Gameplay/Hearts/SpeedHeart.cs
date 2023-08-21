@@ -7,9 +7,12 @@ public class SpeedHeart : Heart
 {
     int speedHeartBonus = 3; // How much faster should 1 heart make us
 
+
+
     // Start is called before the first frame update
     void Awake()
     {
+        type = 1;
         spr = setSprite();
         effects();
     }

@@ -8,7 +8,8 @@ public class CopyHeart : Heart
     void Start()
     {
         PlayerHeartManager phm = FindObjectOfType<PlayerHeartManager>();
-        phm.AddHeart(phm.activeHeartType);
+        //second to last heart
+        phm.AddHeart(phm.hearts[phm.hearts.Count - 2].type);
         phm.hearts.Remove(this);
         Destroy(this);
     }
