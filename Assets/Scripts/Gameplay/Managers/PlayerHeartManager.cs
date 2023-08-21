@@ -21,7 +21,7 @@ public class PlayerHeartManager : MonoBehaviour
         AddHeart(1);
         AddHeart(2);
         AddHeart(3);
-        AddHeart(1);
+        AddHeart(6);
 
         //---------------------------------------------------------
 
@@ -78,6 +78,8 @@ public class PlayerHeartManager : MonoBehaviour
         //2 ->  jump heart
         //3 ->  metal heart
         //4 ->  bomb heart
+        //5 ->  copy heart                  DOES NOT HAVE ACTIVE TYPE BECAUSE IT JUST COPIES A DIFFERENT ONE
+        //6 ->  rechargeable heart
 
         switch(type)
         {
@@ -103,6 +105,10 @@ public class PlayerHeartManager : MonoBehaviour
                 break;
             case 5:
                 hearts.Add(gameObject.AddComponent<CopyHeart>());
+                break;
+            case 6:
+                hearts.Add(gameObject.AddComponent<RechargeableHeart>());
+                activeHeartType = 6;
                 break;
             default:
                 break;
