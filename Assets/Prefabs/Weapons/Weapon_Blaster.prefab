@@ -105,8 +105,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2330492165118160630}
+  - component: {fileID: 3141681909537131457}
   m_Layer: 0
-  m_Name: Upgrades
+  m_Name: UpgradeGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -124,10 +125,22 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6653273039374812553}
+  m_Children: []
   m_Father: {fileID: 2225486910712267856}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3141681909537131457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1604079720149693438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930c031314c9a484c903b05482d31139, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shape: 0
 --- !u!1 &2164575948437375177
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,14 +226,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-    barrelCount: 1
+    projectilesPerShot: 1
+    ammoCostPerShot: 1
     shotCooldownSeconds: 0.1
     damage: 5
     reloadTimeSeconds: 1
     spreadRadians: 0.1
     clipSize: 16
     recoilRadians: 0
-  upgradeHolder: {fileID: 1604079720149693438}
+  upgradeGrid: {fileID: 3141681909537131457}
   WeaponName: Blaster
   WeaponIcon: {fileID: 21300000, guid: 3c187e19c32c13542ba8a0c1a3a88ece, type: 3}
   CrosshairDataDefault:
@@ -1463,80 +1477,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6694346691460421829, guid: fa498bfcbbc9707458a2c75334b150c8,
     type: 3}
   m_PrefabInstance: {fileID: 5462012510316320569}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &6975450826118636300
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 2330492165118160630}
-    m_Modifications:
-    - target: {fileID: 107659575806718519, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_Name
-      value: UpgradeTile_3x3 ClipSize
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a8139c7471348d1408e74f4072bc84aa, type: 3}
---- !u!4 &6653273039374812553 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4366498248506943109, guid: a8139c7471348d1408e74f4072bc84aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 6975450826118636300}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7812733688514592728
 PrefabInstance:

@@ -35,8 +35,8 @@ namespace Unity.FPS.Game
         [NonSerialized]
         private GunStats _cachedStats;
 
-        [Tooltip("The gameobject that holds the UpgradeTiles used when calculating stats")]
-        public GameObject upgradeHolder;
+        [Tooltip("The grid that contains upgrades, used to calculate stats")]
+        public TileGrid upgradeGrid;
         
         [Header("Information")] [Tooltip("The name that will be displayed in the UI for this weapon")]
         public string WeaponName;
@@ -505,12 +505,7 @@ namespace Unity.FPS.Game
         /// </summary>
         public void RecalculateStatsCache()
         {
-            GunStats stats = (GunStats)baseStats.Clone();
-            
-            foreach (IUpgradeTile tile in upgradeHolder.GetComponentsInChildren<IUpgradeTile>())
-                tile.ApplyStats(stats);
-            
-            _cachedStats = stats.Normalise();
+            _cachedStats = upgradeGrid.CalculateStats(baseStats);
         }
     }
 }
