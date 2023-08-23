@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class CraftingManager : MonoBehaviour
 {
-    string[] names;
-    int[] inventory;
+    public bool setMenuActive = false;
+
+    public string[] names;
+    public int[] inventory;
     //Duct Tape -> 0
     //Metal -> 1
     //Wire -> 2
@@ -40,6 +44,6 @@ public class CraftingManager : MonoBehaviour
 
     public void OpenCraftingMenu()
     {
-
-    }
+        setMenuActive = true;
+    } 
 }
