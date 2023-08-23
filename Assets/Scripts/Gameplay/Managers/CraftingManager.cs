@@ -17,7 +17,6 @@ public class CraftingManager : MonoBehaviour
     {
         inventory = new int[5];
         names = new string[]{"Duct Tape", "Scrap Metal", "Copper Wire", "Spring", "Battery"};
-        displayInventory();
     }
 
     // Update is called once per frame
@@ -37,5 +36,10 @@ public class CraftingManager : MonoBehaviour
         {
             Debug.Log(names[i] + ": " + inventory[i]);
         }
+    }
+
+    public void OpenCraftingMenu()
+    {
+
     }
 }

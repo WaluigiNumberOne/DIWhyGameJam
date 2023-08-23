@@ -192,7 +192,26 @@ namespace Unity.FPS.Gameplay
                 }
             }
 
+            //Check for interactions
+            if(m_InputHandler.GetInteractInput())
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit, 3f))    //Max distance for raycast is 3 unit
+                {
+                    if(hit.transform.GetComponent<CraftingManager>())
+                    {
+                        OnInteract(hit.transform.GetComponent<CraftingManager>());
+                    }
+                    
+                }
+            }
+
             HandleCharacterMovement();
+        }
+
+        public void OnInteract(CraftingManager hit)
+        {
+            hit.OpenCraftingMenu();
         }
 
         public void OnDie()
