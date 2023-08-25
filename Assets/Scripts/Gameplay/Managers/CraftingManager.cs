@@ -8,6 +8,7 @@ public class CraftingManager : MonoBehaviour
 {
     public bool setMenuActive = false;
 
+    public List<CraftingRecipe> recipes;
     public string[] names;
     public int[] inventory;
     //Duct Tape -> 0
@@ -19,6 +20,8 @@ public class CraftingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initializeRecipes();
+
         inventory = new int[5];
         names = new string[]{"Duct Tape", "Scrap Metal", "Copper Wire", "Spring", "Battery"};
     }
@@ -45,5 +48,19 @@ public class CraftingManager : MonoBehaviour
     public void OpenCraftingMenu()
     {
         setMenuActive = true;
-    } 
+    }
+
+    public void initializeRecipes()
+    {
+        TestRecipe test = gameObject.AddComponent<TestRecipe>();
+        Test2Recipe test2 = gameObject.AddComponent<Test2Recipe>();
+
+        recipes.Add(test);
+        recipes.Add(test2);
+    }
+
+    public List<CraftingRecipe> getRecipes()
+    {
+        return recipes;
+    }
 }

@@ -17,12 +17,21 @@ public class CraftingMenu : MonoBehaviour
     public TMP_Text springText;
     public TMP_Text batteryText;
 
+    public GameObject recipeDisplayPrefab;
+    public Transform recipeRoot;
+    public TMP_Text descText;
+
     CraftingManager craftingManager;
+    public CraftingRecipe activeRecipe;
+
+    string missingComponent;
 
     // Start is called before the first frame update
     void Start()
     {
         craftingManager = FindObjectOfType<CraftingManager>();
+
+        InstantiateRecipePrefabs();
     }
 
     // Update is called once per frame
@@ -38,7 +47,7 @@ public class CraftingMenu : MonoBehaviour
     public void SetMenuActive(bool active)
     {
         MenuRoot.SetActive(active);
-        Debug.Log("Crafting Menu: " + active);
+        //Debug.Log("Crafting Menu: " + active);
 
         UpdateInventoryUI();
 
@@ -57,6 +66,72 @@ public class CraftingMenu : MonoBehaviour
             Time.timeScale = 1f;
         }
 
+        
+    }
+
+    public void SelectRecipe(RecipeDisplay display)
+    {
+        display.show();
+        activeRecipe = display.GetRecipe();
+    }
+
+    public void tryCraftActiveRecipe()
+    {
+        //Debug.Log("Active Recipe: " + activeRecipe.name);
+        if (checkComponents())
+        {
+            //Debug.Log("Crafting...");
+            if (activeRecipe != null)
+            {
+                Instantiate(activeRecipe.craftableObj);
+                foreach (Vector2 v in activeRecipe.components)
+                {
+                    craftingManager.inventory[(int)v.x] -= (int)v.y;        //Take components out of inventory
+                }
+                UpdateInventoryUI();
+            }
+            else
+                Debug.Log("well thats not good");
+            
+        }
+        else
+        {
+            Debug.Log("Not Enough Components: " + missingComponent);
+        }
+    }
+
+    private bool checkComponents()
+    {
+        foreach(Vector2 v in activeRecipe.components)
+        {
+            if (v.y > craftingManager.inventory[(int)v.x])  //Dont Have Enough Components
+            {
+                missingComponent = v.x.ToString();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void InstantiateRecipePrefabs()
+    {
+        int recipeNum = 0;
+        List<CraftingRecipe> recipes = craftingManager.getRecipes();
+
+        foreach(CraftingRecipe c in recipes)
+        {
+            RecipeDisplay display = Instantiate(recipeDisplayPrefab, recipeRoot).GetComponent<RecipeDisplay>();
+            display.GetComponentInChildren<Canvas>().transform.localScale = Vector3.one;                        //IDK why but it sets scale to 0 so fix that here
+            display.transform.localPosition += Vector3.down * 110 * recipeNum;                                  //move down 110 pixels each time
+            display.description = descText;
+            display.SetRecipe(c);
+
+            SelectRecipe(display);  //set active recipe to most recent
+
+            recipeNum++;
+        }
+
+        
     }
 
     private void UpdateInventoryUI()

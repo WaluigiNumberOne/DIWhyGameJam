@@ -646,7 +646,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9124919321975448597}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5271641845471084230}
+        m_TargetAssemblyTypeName: CraftingMenu, fps.UI
+        m_MethodName: tryCraftActiveRecipe
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1818062495403524101
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,7 +893,7 @@ Transform:
   m_GameObject: {fileID: 3075284669199141920}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 135, z: 0}
+  m_LocalPosition: {x: -10, y: 135, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2218,7 +2230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0.8862745}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2356,6 +2368,10 @@ MonoBehaviour:
   wireText: {fileID: 7823686896535738346}
   springText: {fileID: 8046435598386127204}
   batteryText: {fileID: 8102629862277531446}
+  recipeDisplayPrefab: {fileID: 381586013870433374, guid: cd53f01ace49f054c86602bb3a3a646c,
+    type: 3}
+  recipeRoot: {fileID: 6001443513369142107}
+  descText: {fileID: 929226054385690596}
 --- !u!1 &8470959534848610360
 GameObject:
   m_ObjectHideFlags: 0
