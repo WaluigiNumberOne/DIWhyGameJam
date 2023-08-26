@@ -52,11 +52,22 @@ public class CraftingManager : MonoBehaviour
 
     public void initializeRecipes()
     {
-        TestRecipe test = gameObject.AddComponent<TestRecipe>();
-        Test2Recipe test2 = gameObject.AddComponent<Test2Recipe>();
+        AccuracyUpgrade accUp = gameObject.AddComponent<AccuracyUpgrade>();
+        DamageUpgrade damageUp = gameObject.AddComponent<DamageUpgrade>();
+        FireRateUpgrade rateUp = gameObject.AddComponent<FireRateUpgrade>();
+        MagazineSizeUpgrade magUp = gameObject.AddComponent<MagazineSizeUpgrade>();
+        ProjectileUpgrade projUp = gameObject.AddComponent<ProjectileUpgrade>();
+        RecoilUpgrade recoilUp = gameObject.AddComponent<RecoilUpgrade>();
+        ReloadUpgrade reloadUp = gameObject.AddComponent<ReloadUpgrade>();
 
-        recipes.Add(test);
-        recipes.Add(test2);
+        recipes.Add(accUp);
+        recipes.Add(damageUp);
+        recipes.Add(rateUp);
+        recipes.Add(magUp);
+        recipes.Add(projUp);
+        recipes.Add(recoilUp);
+        recipes.Add(reloadUp);
+
     }
 
     public List<CraftingRecipe> getRecipes()
