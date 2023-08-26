@@ -8,6 +8,7 @@ public class RecipeDisplay : MonoBehaviour
 {
     public TMP_Text name;
     public TMP_Text description;
+    public TMP_Text activeName;
     public TMP_Text components;
     public Button selectButton;
     public Scrollbar scrollbar;
@@ -21,12 +22,14 @@ public class RecipeDisplay : MonoBehaviour
         craftingRecipe = recipe;
         //Debug.Log(craftingRecipe);
         name.text = recipe.name;
+        activeName.text = recipe.name;
         description.text = recipe.description;
         components.text = recipe.getComponentsAsString();
     }
 
     public void show()
     {
+        activeName.text = craftingRecipe.name;
         description.text = craftingRecipe.description;
     }
 
