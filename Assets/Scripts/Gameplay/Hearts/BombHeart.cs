@@ -42,7 +42,7 @@ public class BombHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("PlaceholderBombHeart");
+        var sprite = Resources.Load<Sprite>("bomb");
         return sprite;
     }
 }

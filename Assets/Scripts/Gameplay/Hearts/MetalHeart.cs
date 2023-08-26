@@ -43,7 +43,7 @@ public class MetalHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("PlaceholderMetalHeart");
+        var sprite = Resources.Load<Sprite>("metal");
         return sprite;
     }
 }

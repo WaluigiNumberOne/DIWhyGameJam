@@ -35,7 +35,7 @@ public class DefaultHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("PlaceholderHeart");
+        var sprite = Resources.Load<Sprite>("default");
         return sprite;
     }
 }

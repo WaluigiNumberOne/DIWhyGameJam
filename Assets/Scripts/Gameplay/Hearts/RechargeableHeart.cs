@@ -65,7 +65,7 @@ public class RechargeableHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("PlaceholderRegenHeart");
+        var sprite = Resources.Load<Sprite>("regen");
         return sprite;
     }
 }

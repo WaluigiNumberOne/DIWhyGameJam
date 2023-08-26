@@ -37,7 +37,7 @@ public class CopyHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("var2");
+        var sprite = Resources.Load<Sprite>("copy");
         return sprite;
     }
 }

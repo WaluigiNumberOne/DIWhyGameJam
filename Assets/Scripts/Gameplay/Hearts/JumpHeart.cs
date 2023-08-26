@@ -41,7 +41,7 @@ public class JumpHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("PlaceholderJumpHeart");
+        var sprite = Resources.Load<Sprite>("jump");
         return sprite;
     }
 }
