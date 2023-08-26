@@ -18,9 +18,11 @@ public class PlayerHeartManager : MonoBehaviour
     void Start()
     {
         //Testing
+        AddHeart(0);
         AddHeart(1);
         AddHeart(2);
         AddHeart(3);
+        AddHeart(4);
         AddHeart(6);
 
         //---------------------------------------------------------
@@ -119,8 +121,8 @@ public class PlayerHeartManager : MonoBehaviour
     {
         //oof ouch ow
         Debug.Log("You idiot you ran out of hearts now youre dead I hate you");
-        //PlayerCharacterController pcc = FindObjectOfType<PlayerCharacterController>();
-        //pcc.OnDie();
+        PlayerCharacterController pcc = FindObjectOfType<PlayerCharacterController>();
+        pcc.OnDie();
     }
 
     private void LoseHeart()

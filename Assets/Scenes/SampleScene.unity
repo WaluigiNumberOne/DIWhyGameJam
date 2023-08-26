@@ -9850,6 +9850,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 880213733691291059, guid: dd436a82c0c70de4baf4ed3da6676ac6,
+        type: 3}
+      propertyPath: m_Name
+      value: CraftingScrollbar
+      objectReference: {fileID: 0}
     - target: {fileID: 1228251534716032403, guid: dd436a82c0c70de4baf4ed3da6676ac6,
         type: 3}
       propertyPath: m_AnchorMax.y

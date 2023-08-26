@@ -43,7 +43,7 @@ public class SpeedHeart : Heart
 
     public override Sprite setSprite()
     {
-        var sprite = Resources.Load<Sprite>("PlaceholderSpeedHeart");
+        var sprite = Resources.Load<Sprite>("speed");
         return sprite;
     }
 }

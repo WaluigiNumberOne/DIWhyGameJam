@@ -2372,6 +2372,8 @@ MonoBehaviour:
     type: 3}
   recipeRoot: {fileID: 6001443513369142107}
   descText: {fileID: 929226054385690596}
+  scrollbar: {fileID: 1971660974098688772}
+  activeRecipe: {fileID: 0}
 --- !u!1 &8470959534848610360
 GameObject:
   m_ObjectHideFlags: 0

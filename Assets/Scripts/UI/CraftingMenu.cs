@@ -20,6 +20,7 @@ public class CraftingMenu : MonoBehaviour
     public GameObject recipeDisplayPrefab;
     public Transform recipeRoot;
     public TMP_Text descText;
+    public Scrollbar scrollbar;
 
     CraftingManager craftingManager;
     public CraftingRecipe activeRecipe;
@@ -124,6 +125,7 @@ public class CraftingMenu : MonoBehaviour
             display.GetComponentInChildren<Canvas>().transform.localScale = Vector3.one;                        //IDK why but it sets scale to 0 so fix that here
             display.transform.localPosition += Vector3.down * 110 * recipeNum;                                  //move down 110 pixels each time
             display.description = descText;
+            display.scrollbar = scrollbar;
             display.SetRecipe(c);
 
             SelectRecipe(display);  //set active recipe to most recent
