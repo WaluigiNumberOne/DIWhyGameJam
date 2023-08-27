@@ -39,6 +39,7 @@ RectTransform:
   - {fileID: 6733072231107127269}
   - {fileID: 6926553846694780145}
   - {fileID: 755438360572116093}
+  - {fileID: 540679639721236642}
   m_Father: {fileID: 6821646205912676132}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -350,6 +351,37 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1639157708211945811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 540679639721236642}
+  m_Layer: 0
+  m_Name: TileSortRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &540679639721236642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1639157708211945811}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -211, y: -75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5858091261411569444}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2153492754805626608
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +1031,7 @@ GameObject:
   - component: {fileID: 2372009994979904178}
   - component: {fileID: 8766855186730003977}
   - component: {fileID: 743786617020473246}
+  - component: {fileID: 1063598749495445486}
   m_Layer: 5
   m_Name: TileInventoryPanel
   m_TagString: Untagged
@@ -1022,8 +1055,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -61, y: -95}
-  m_SizeDelta: {x: 335.187, y: 76.6628}
+  m_AnchoredPosition: {x: -61, y: -90}
+  m_SizeDelta: {x: 337, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8766855186730003977
 CanvasRenderer:
@@ -1063,6 +1096,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1063598749495445486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7088440795033277838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e35d3821e1145ad4e8c884229a842113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileSortRoot: {fileID: 1639157708211945811}
 --- !u!1 &7369279387687265719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuRoot: {fileID: 5644300097136059977}
+  inventoryPanel: {fileID: 7088440795033277838}
   closeMenu: {fileID: 1766613752935258850}
 --- !u!1 &9189436924409371012
 GameObject:

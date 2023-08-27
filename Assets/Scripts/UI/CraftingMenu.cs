@@ -22,9 +22,10 @@ public class CraftingMenu : MonoBehaviour
     public TMP_Text descText;
     public TMP_Text activeNameText;
     public Scrollbar scrollbar;
+    public CraftingRecipe activeRecipe;
 
     CraftingManager craftingManager;
-    public CraftingRecipe activeRecipe;
+    UpgradeMenu upgradeMenu;
 
     string missingComponent;
 
@@ -32,6 +33,7 @@ public class CraftingMenu : MonoBehaviour
     void Start()
     {
         craftingManager = FindObjectOfType<CraftingManager>();
+        upgradeMenu = FindObjectOfType<UpgradeMenu>();
 
         InstantiateRecipePrefabs();
     }
@@ -85,7 +87,7 @@ public class CraftingMenu : MonoBehaviour
             //Debug.Log("Crafting...");
             if (activeRecipe != null)
             {
-                Instantiate(activeRecipe.craftableObj);
+                Instantiate(activeRecipe.craftableObj, upgradeMenu.inventoryPanel.transform);
                 foreach (Vector2 v in activeRecipe.components)
                 {
                     craftingManager.inventory[(int)v.x] -= (int)v.y;        //Take components out of inventory

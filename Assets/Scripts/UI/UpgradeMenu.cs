@@ -10,6 +10,7 @@ public class UpgradeMenu : MonoBehaviour
     PlayerInputHandler m_Input;
 
     public GameObject MenuRoot;
+    public GameObject inventoryPanel;
     public Button closeMenu;
     // Start is called before the first frame update
     void Start()
