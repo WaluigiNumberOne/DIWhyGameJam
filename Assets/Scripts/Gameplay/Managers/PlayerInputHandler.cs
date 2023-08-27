@@ -55,6 +55,15 @@ namespace Unity.FPS.Gameplay
             return false;
         }
 
+        public bool GetUpgradeMenuInput()
+        {
+            if (CanProcessInput())
+            {
+                return Input.GetKeyDown(KeyCode.Q);
+            }
+            return false;
+        }
+
         public Vector3 GetMoveInput()
         {
             if (CanProcessInput())
