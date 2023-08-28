@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2416299559450319963}
   - component: {fileID: 8973632149827810097}
+  - component: {fileID: -198057840467750852}
   m_Layer: 0
   m_Name: UpgradeTile_1x1
   m_TagString: Untagged
@@ -55,6 +56,18 @@ MonoBehaviour:
   horizontalFlip: 0
   verticalFlip: 0
   rotation: 0
+--- !u!114 &-198057840467750852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048851340260002025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 317e018e9eecc054e9d1a9377a8a4679, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6454062148270067361
 GameObject:
   m_ObjectHideFlags: 0
