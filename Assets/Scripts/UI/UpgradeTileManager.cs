@@ -53,4 +53,13 @@ public class UpgradeTileManager : MonoBehaviour
         child.localPosition = new Vector2(x, y);
     }
 
+    public void SortAll()
+    {
+        UpgradeTile[] list = tileSortRoot.GetComponentsInChildren<UpgradeTile>();
+        for (int i = 0; i < list.Length; i++)
+        {
+            list[i].transform.SetParent(transform);
+        }
+    }
+
 }

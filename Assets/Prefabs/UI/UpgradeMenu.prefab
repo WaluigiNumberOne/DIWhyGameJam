@@ -360,7 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 540679639721236642}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TileSortRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1454,6 +1454,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot43
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1577,6 +1582,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
@@ -1702,6 +1712,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot44
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1826,6 +1841,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot24
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1949,6 +1969,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
@@ -2084,6 +2109,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot42
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2208,6 +2238,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot12
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2331,6 +2366,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot41
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
@@ -2466,6 +2506,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot31
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2589,6 +2634,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
@@ -2714,6 +2764,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot34
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -2837,6 +2892,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot23
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
@@ -2972,6 +3032,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot32
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3095,6 +3160,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
@@ -3230,6 +3300,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITileSlot14
       objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3353,6 +3428,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UITileSlot22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2223680477958713669, guid: 3fad547ef42194942aeeb5174273ead5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2472071724857176937, guid: 3fad547ef42194942aeeb5174273ead5,
         type: 3}
