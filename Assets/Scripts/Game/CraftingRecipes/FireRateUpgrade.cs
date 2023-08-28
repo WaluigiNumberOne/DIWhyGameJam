@@ -6,7 +6,7 @@ public class FireRateUpgrade : CraftingRecipe
 {
     void Awake()
     {
-        craftableObj = Resources.Load("Craftables/FireRateUpgrade.prefab");
+        craftableObj = Resources.Load("Craftables/FireRateUpgrade");
         name = "Fire Rate Upgrade";
         description = "Shoot faster";
 

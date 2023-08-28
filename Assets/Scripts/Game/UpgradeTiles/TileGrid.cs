@@ -12,7 +12,7 @@ namespace Unity.FPS.Game.UpgradeTiles
         private static readonly int[][] GridTest =
         {
             new []{0, 0, 0, 0},
-            new []{0, 0, -1, 0},
+            new []{0, 0, 0, 0},
             new []{0, 0, 0, 0},
             new []{0, 0, 0, 0}
         };

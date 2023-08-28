@@ -6,7 +6,7 @@ public class ProjectileUpgrade : CraftingRecipe
 {
     void Awake()
     {
-        craftableObj = Resources.Load("Craftables/ProjectileUpgrade.prefab");
+        craftableObj = Resources.Load("Craftables/ProjectileUpgrade");
         name = "Projectile Upgrade";
         description = "Shoot more projectiles out of your gun with every shot";
 

@@ -11,10 +11,14 @@ public class UpgradeTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     bool followingMouse = false;
 
+    GraphicRaycaster caster;
+    EventSystem m_EventSystem;
+    PointerEventData m_PointerEventData;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_EventSystem = FindObjectOfType<EventSystem>();
     }
 
     // Update is called once per frame
@@ -30,18 +34,37 @@ public class UpgradeTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("clicked");
+        caster = parentCanvas.GetComponent<GraphicRaycaster>();
+        m_PointerEventData = new PointerEventData(m_EventSystem);
+        m_PointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        caster.Raycast(m_PointerEventData, results);
+
+        UIUpgradeSlot slot = null;
+        foreach (RaycastResult r in results)
+        {
+            if (r.gameObject.GetComponent<UIUpgradeSlot>())
+            {
+                slot = r.gameObject.GetComponent<UIUpgradeSlot>();
+                slot.removeTile();
+                break;
+            }
+
+        }
+
+
         followingMouse = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         //Debug.Log("released");
-        GraphicRaycaster caster = parentCanvas.GetComponent<GraphicRaycaster>();
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem m_EventSystem = FindObjectOfType<EventSystem>();
-        PointerEventData m_PointerEventData = new PointerEventData(m_EventSystem);
-
+        caster = parentCanvas.GetComponent<GraphicRaycaster>();
+        m_PointerEventData = new PointerEventData(m_EventSystem);
         m_PointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
         caster.Raycast(m_PointerEventData, results);
 
         bool foundSlot = false;
@@ -56,9 +79,14 @@ public class UpgradeTile : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             
         }
 
-        if(foundSlot)
+        if (foundSlot)
         {
-            slot.Assign(this);
+            if (!slot.Assign(this))
+            {
+                //reset
+                Debug.Log("Slot is taken");
+                transform.SetParent(FindObjectOfType<UpgradeTileManager>().transform);
+            }
         }
         else
         {
