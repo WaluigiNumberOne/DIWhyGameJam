@@ -36,10 +36,12 @@ namespace Unity.FPS.Gameplay
 
             // Remember start position for animation
             m_StartPosition = transform.position;
+            Debug.Log(m_StartPosition);
         }
 
         void Update()
         {
+            
             // Handle bobbing
             float bobbingAnimationPhase = ((Mathf.Sin(Time.time * VerticalBobFrequency) * 0.5f) + 0.5f) * BobbingAmount;
             transform.position = m_StartPosition + Vector3.up * bobbingAnimationPhase;
